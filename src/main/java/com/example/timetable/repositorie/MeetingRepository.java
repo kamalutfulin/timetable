@@ -19,8 +19,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     Boolean checkCollisionTime(@Param("userid") Integer userid, @Param("meetingTimeStart") LocalDateTime meetingTimeStart,
                                @Param("meetingTimeStop") LocalDateTime meetingTimeStop);
 
-    @Query(nativeQuery = true, value = "select * from meeting where ((:meetingTimeStart) > meeting.meeting_time_start and (:meetingTimeStart)  < meeting.meeting_time_stop) " +
-            "or ((:meetingTimeStop)  > meeting.meeting_time_start and (:meetingTimeStop) < meeting.meeting_time_stop) ")
+    @Query(nativeQuery = true, value = "select * from meeting where ((:meetingTimeStart) < meeting.meeting_time_start and (:meetingTimeStop) > meeting.meeting_time_stop)")
     List<Meeting> findAllByMeetingTimeStartIsBetween(@Param("meetingTimeStart") LocalDateTime meetingTimeStart,
                                                      @Param("meetingTimeStop") LocalDateTime meetingTimeStop);
 }
